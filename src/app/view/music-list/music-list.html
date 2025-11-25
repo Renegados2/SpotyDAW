@@ -1,0 +1,81 @@
+<div class="w-full h-[88vh] pt-[12vh] bg-[#121212] flex flex-col space-y-6">
+
+  <!-- Search -->
+  <div class="flex justify-center w-full">
+    <div
+      class="rounded-3xl w-[40vw] h-[5vh] relative flex items-center px-[2vw]
+             bg-[#181818] border border-[#2a2a2a] transition-shadow"
+      [ngClass]="{'shadow-lg shadow-black/40': searchBarFocused()}"
+    >
+      <fa-icon
+        [icon]="faMagnifyingGlass"
+        class="absolute left-2 rounded-full px-3 py-2
+               bg-[rgba(0,73,144,0.4)] text-white">
+      </fa-icon>
+
+      <input
+        (focus)="toggleFocus()"
+        (focusout)="toggleFocus()"
+        class="w-full ml-[2vw] outline-none bg-transparent text-neutral-200 placeholder-neutral-500"
+        type="text"
+        [(ngModel)]="keyWord"
+        placeholder="Search song...">
+    </div>
+  </div>
+
+  <!-- Song list (fills all remaining height) -->
+<div class="w-full h-[70.5vh] space-y-[1vh] overflow-y-scroll px-[6vw] pt-[2vh] m-0">
+
+
+    @if (songs) {
+      @for (song of songs; track $index) {
+
+        <div class="flex justify-between w-full
+                    px-[3vw] py-[1vh] rounded-2xl cursor-pointer
+                    bg-[#181818] hover:bg-[#282828]
+                    transition-colors"
+             (click)="selectSong(song)">
+
+          <div>
+            <p class="font-bold text-lg text-white">{{ song.title }}</p>
+            <p class="text-neutral-400">{{ song.artist }}</p>
+          </div>
+
+          <button
+            (click)="swapFavorite(song, $event)"
+            (click)="$event.stopPropagation()"
+          >
+            <fa-icon
+              [icon]="song.favorite ? sHeart : rHeart"class="text-xl"
+              [ngClass]="{
+                'text-[rgba(0,73,144)]': song.favorite,
+                'text-neutral-500': !song.favorite
+              }"
+            />
+          </button>
+        </div>
+
+      }
+    } @else {
+
+      <div class="text-neutral-400">
+        <p>No songs available</p>
+      </div>
+
+    }
+
+  </div>
+
+  <!-- Add button (fixed) -->
+  <div class="fixed bottom-10 right-6">
+    <div
+      class="w-12 h-12 rounded-full text-white text-4xl
+             bg-[rgba(0,73,144)] hover:bg-[rgba(0,73,144,0.85)]
+             transition-colors cursor-pointer"
+      (click)="addSong()"
+    >
+      <span class="absolute right-3">+</span>
+    </div>
+  </div>
+
+</div>

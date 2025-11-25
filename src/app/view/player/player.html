@@ -1,0 +1,35 @@
+<div class="w-full h-full pt-[6vh] bg-[#121212] flex flex-col items-center space-y-6 text-white">
+
+
+  <!-- Cover -->
+         <h1 class="text-3xl font-bold truncate">{{ currentSong().title ?? 'Title' }}</h1>
+  <div class="w-[40vw] max-w-sm h-auto rounded-xl overflow-hidden shadow-lg bg-[#181818]">
+    <img [src]="currentSong().cover ?? 'song_placeholder.png'" alt="Cover" class="w-full h-full object-cover">
+  </div>
+
+  <!-- Player -->
+  <div class="w-[40vw] max-w-sm mt-4">
+    <audio [src]="currentSong().mp3Url" controls class="w-full rounded-lg bg-[#181818]"></audio>
+  </div>
+
+  <!-- Title + Favorite -->
+  <div class="w-[40vw] max-w-sm flex flex-col space-y-2 mt-4">
+    <div class="flex justify-between items-center">
+      <button (click)="swapFavorite()" class="transition-colors">
+        <fa-icon class="text-xl"
+        [icon]="currentSong().favorite ? sHeart : rHeart" [ngClass]="{
+                'text-[rgba(0,73,144)]': currentSong().favorite,
+                'text-neutral-500': !currentSong().favorite
+              }" />
+      </button>
+        <button (click)="deleteSong()" class="text-red-500 hover:text-red-400 transition-colors">
+          <fa-icon [icon]="faTrashCan"></fa-icon>
+        </button>
+
+    </div>
+    <p class="text-neutral-400 text-sm">{{ currentSong().description }}</p>
+  </div>
+
+
+
+</div>

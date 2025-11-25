@@ -1,0 +1,26 @@
+<div class="mt-[4vh] w-full flex fixed top-0 justify-center">
+  <div class="icon-container">
+
+    <a class="icon text-gray-300 hover:text-white" [ngClass]="{
+    'text-white text-lg border-white': displayingIndex()
+  }" (click)="clickedIndex()">
+      <fa-icon [icon]="faHouse" />
+    </a>
+
+    <a class="icon text-gray-300 hover:text-white" [ngClass]="{
+    'text-white font-semibold border-b-2 border-white': displayingList()
+  }" (click)="clickedList()"> <fa-icon [icon]="faListUl" />
+    </a>
+
+    <a class="icon text-gray-300 hover:text-white" [ngClass]="{
+    'text-white font-semibold border-b-2 border-white': displayingForm()
+  }" (click)="clickedForm()"> <fa-icon [icon]="faPlus" />
+    </a>
+
+    <a class="icon text-gray-300 hover:text-white" [ngClass]="{
+    'text-white font-semibold border-b-2 border-white': displayingPlayer()
+  }" (click)="clickedPlayer()"> <fa-icon [icon]="faPlay" />
+    </a>
+  </div>
+
+</div>

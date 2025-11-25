@@ -1,0 +1,62 @@
+<app-header (showIndex)="showIndex = $event" (showList)="showList = $event" (showForm)="showForm = $event"
+  (showPlayer)="showPlayer = $event">
+</app-header>
+
+<div class="flex flex-col min-h-screen bg-[#121212] ">
+
+  <div class="flex-1 w-full flex items-center justify-center">
+
+    @if(showList()) {
+    <app-music-list
+    class="w-full max-h-[90vh] min-h-[80vh]"
+      [newSong]="newSong()"
+      (showForm)="prepareForm()"
+      (selectedSong)="showSong($event)"
+      [favoriteAction]="favoriteAction()"
+      [deletedSong]="deletedSong()"
+      />
+
+    } @else if (showPlayer()) {
+    <app-player
+      class="w-full h-full"
+      (deletedSong)="onDeletedSong($event)"
+      (favoriteToggle)="onFavoriteAction($event)"
+      [currentSong]="currentSong()" (hidePlayer)="showPlayer = !$event"
+    />
+
+    } @else if (showForm()) {
+    <app-add-form
+      class="w-full h-full"
+      (formSent)="addSong($event)"
+      (hideForm)="showForm = !$event"
+    />
+    } @else {
+
+    <div class="flex flex-col items-center justify-center w-full h-full">
+      <img src="logo.png" alt="Logo" class="w-48 h-48 object-contain mb-6">
+      <p class="text-neutral-400 text-lg">Welcome to SpotyDaw</p>
+    </div>
+    }
+
+  </div>
+
+  <div class="flex justify-between items-center h-[8vh] px-[10vw] bg-[#181818] rounded-t-xl relative shadow-md">
+
+    <img [src]="currentSong().cover ? currentSong().cover : 'song_placeholder.png'"
+      class="p-1 rounded-full w-20.5 h-20.5 object-cover" alt="songImage">
+
+    <div class="flex-1 mx-4">
+      <h1 class="text-white text-2xl truncate">{{ currentSong().title ?? 'Title' }}</h1>
+    </div>
+
+    <fa-icon [icon]="currentSong().favorite ? sHeart : rHeart"  [ngClass]="{
+      'text-[rgba(0,73,144)]': currentSong().favorite,
+      'text-neutral-500': !currentSong().favorite
+    }" class="cursor-pointer hover:opacity-80 transition-opacity text-xl" (click)="toggleFavorite()" />
+
+  </div>
+  <footer class="w-full py-2 border-t border-[#2a2a2a] text-center">
+    <p class="text-neutral-500 text-sm">Made By Joan Vila</p>
+  </footer>
+
+</div>
